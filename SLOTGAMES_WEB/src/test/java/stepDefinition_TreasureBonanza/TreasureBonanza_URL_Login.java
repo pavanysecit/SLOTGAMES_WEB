@@ -12,9 +12,9 @@ import cucumber.api.java.Before;
 public class TreasureBonanza_URL_Login {
 private static WebDriver driver;
 	
-	//@Before
+	@Before
 	public static void TreasureBonanza_URL_Login() throws InterruptedException, MalformedURLException, FindFailed {
-		
+
 		System.setProperty("webdriver.chrome.driver", "E:/New_Selenium/chromedriver.exe");
 	    driver = new ChromeDriver();
 		driver.get("http://demo.ysecit.in:82/slotgames/slotsgame");
