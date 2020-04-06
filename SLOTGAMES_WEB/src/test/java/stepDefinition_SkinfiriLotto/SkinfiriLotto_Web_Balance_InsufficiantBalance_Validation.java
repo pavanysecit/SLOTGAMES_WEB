@@ -1,7 +1,9 @@
-package stepDefinition_SkinfiriJungle;
+package stepDefinition_SkinfiriLotto;
 
 import java.io.File;
-
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -15,20 +17,16 @@ import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Screen;
 
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-
-public class SkinfiriJungle_Web_Balance_InsufficiantBalance_Validation {
-WebDriver driver;
+public class SkinfiriLotto_Web_Balance_InsufficiantBalance_Validation {
+	WebDriver driver;
 	
-	@Given("^Chrome browser, valid URL, valid login details, Skinfiri Jungle slot game, balance, spin button and validation message$")
-	public void chrome_browser_valid_URL_valid_login_details_Skinfiri_Jungle_slot_game_balance_spin_button_and_validation_message() throws Throwable {
-		this.driver =  SkinfiriJungle_URL_Login.getDriver();
+	@Given("^Chrome browser, valid URL, valid login details, Skinfiri Lotto slot game, balance, spin button and validation message$")
+	public void chrome_browser_valid_URL_valid_login_details_Skinfiri_Lotto_slot_game_balance_spin_button_and_validation_message() throws Throwable {
+		this.driver =  SkinfiriLotto_URL_Login.getDriver();
 	}
 
-	@When("^Open the Skinfiri Jungle slot game by entering the valid URL in browser, enter the valid login details, transfer the balance, click on spin button till balance turns to zero and check the validation message$")
-	public void open_the_Skinfiri_Jungle_slot_game_by_entering_the_valid_URL_in_browser_enter_the_valid_login_details_transfer_the_balance_click_on_spin_button_till_balance_turns_to_zero_and_check_the_validation_message() throws Throwable {
+	@When("^Open the Skinfiri Lotto slot game by entering the valid URL in browser, enter the valid login details, transfer the balance, click on spin button till balance turns to zero and check the validation message$")
+	public void open_the_Skinfiri_Lotto_slot_game_by_entering_the_valid_URL_in_browser_enter_the_valid_login_details_transfer_the_balance_click_on_spin_button_till_balance_turns_to_zero_and_check_the_validation_message() throws Throwable {
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("transferInput")));
 		
@@ -39,15 +37,14 @@ WebDriver driver;
 		Thread.sleep(2000);
 		driver.findElement(By.className("Transfer_Ok_but")).click();
 		Screen screen=new Screen();
-		Pattern spin1=new Pattern("E:/Sikuli Images/SkinfiriJungle/spin.png");
+		Pattern spin1=new Pattern("E:/Sikuli Images/SkinfiriLotto/spin.png");
 		screen.wait(spin1, 80);
 		TakesScreenshot tsc=(TakesScreenshot)driver;
 		
 		File sct = driver.findElement(By.xpath("//*[@id='iframeSlotGame']")).getScreenshotAs(OutputType.FILE);
 		String path = System.getProperty("user.dir")+"E:\\Sikuli Images\\Win\\balance_beforeSpin_1_1.PNG";
-		Pattern Insuffbalance=new Pattern("E:/Sikuli Images/SkinfiriJungle/insufficiant.png");
-		Pattern betvalue_1_5=new Pattern("E:/Sikuli Images/SkinfiriJungle/betvalue1_5.png");
-		Pattern spin=new Pattern("E:/Sikuli Images/SkinfiriJungle/spin.png");
+		Pattern betvalue_1_5=new Pattern("E:/Sikuli Images/SkinfiriLotto/betvalue_1_5.png");
+		Pattern spin=new Pattern("E:/Sikuli Images/SkinfiriLotto/spin.png");
 		
 	    // Clicking the denomination and spin button
 	    screen.click(betvalue_1_5);
@@ -56,7 +53,7 @@ WebDriver driver;
 	    Thread.sleep(5000);
 	
 		 //comparing the in-sufficient balance message displayed or not
-	      Pattern bal=new Pattern("E:/Sikuli Images/SkinfiriJungle/insufficiant.png");
+	      Pattern bal=new Pattern("E:/Sikuli Images/SkinfiriLotto/insufficiant.png");
 	      Finder finder =new Finder(screen.capture().getImage());
 	      String ht = finder.find(bal);
 	      double score=20;                
@@ -77,8 +74,8 @@ WebDriver driver;
 		  Assert.assertTrue(score > 97);
 	}
 
-	@Then("^Player should be blocked from playing the game when there is no balance in the account in Skinfiri Jungle game$")
-	public void player_should_be_blocked_from_playing_the_game_when_there_is_no_balance_in_the_account_in_Skinfiri_Jungle_game() throws Throwable {
+	@Then("^Player should be blocked from playing the game when there is no balance in the account in Skinfiri Lotto game$")
+	public void player_should_be_blocked_from_playing_the_game_when_there_is_no_balance_in_the_account_in_Skinfiri_Lotto_game() throws Throwable {
 		 Thread.sleep(3000);
 		 driver.quit();
 	}
