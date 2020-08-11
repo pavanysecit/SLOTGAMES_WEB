@@ -22,9 +22,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/sw176/Downloads/aocr.jar"/>
 	<classpathentry kind="lib" path="C:/Users/sw176/Downloads/jar_files (2)/javacpp-1.4.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/sw176/Downloads/opencv/build/java/opencv-411.jar"/>
-	<classpathentry kind="lib" path="C:/Users/sw176/Downloads/sqljdbc4-2.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -18,7 +18,8 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 public class GoldenCrown_Web_AutoSpin_TenSpins {
-WebDriver driver;
+	WebDriver driver;
+	Screen screen=new Screen();
 	
 	@Given("^Chrome browser, valid URL, valid login details, Golden Crown  slot game, balance, spin button, auto spin button, ten spins option and number of spins left message$")
 	public void chrome_browser_valid_URL_valid_login_details_Golden_Crown_slot_game_balance_spin_button_auto_spin_button_ten_spins_option_and_number_of_spins_left_message() throws Throwable {
@@ -27,42 +28,41 @@ WebDriver driver;
 
 	@When("^Open the Golden Crown  slot game by entering the valid URL in browser, enter the valid login details, transfer the balance, click on ten spin option under auto spin drop down and check the number of spins left message$")
 	public void open_the_Golden_Crown_slot_game_by_entering_the_valid_URL_in_browser_enter_the_valid_login_details_transfer_the_balance_click_on_ten_spin_option_under_auto_spin_drop_down_and_check_the_number_of_spins_left_message() throws Throwable {
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("transferInput")));
 		WebElement balT = driver.findElement(By.id("transferInput"));
 		balT.clear();
 		Thread.sleep(1000);
 		balT.sendKeys("300");
-		Thread.sleep(2000);
 		driver.findElement(By.className("Transfer_Ok_but")).click();
-		Thread.sleep(15000);
+		Thread.sleep(3000);
 		TakesScreenshot tsc=(TakesScreenshot)driver;
 		
 		File sct = driver.findElement(By.xpath("//*[@id='iframeSlotGame']")).getScreenshotAs(OutputType.FILE);
-		String path = System.getProperty("user.dir")+"E:\\Sikuli Images\\AutoSpins.PNG";
-		Screen screen=new Screen();
-		Pattern autospin=new Pattern("E:/Sikuli Images/others/autospin.png");
-		Pattern spin=new Pattern("E:/Sikuli Images/others/ten.png");
-		Pattern pat2=new Pattern("E:/Sikuli Images/others/9spins.png");
-		Pattern pat3=new Pattern("E:/Sikuli Images/others/8spins.png");
-		Pattern pat4=new Pattern("E:/Sikuli Images/others/7spins.png");
-		Pattern pat5=new Pattern("E:/Sikuli Images/others/6spins.png");
-		Pattern pat6=new Pattern("E:/Sikuli Images/others/5spins.png");
-		Pattern pat7=new Pattern("E:/Sikuli Images/others/4spins.png");
-		Pattern pat8=new Pattern("E:/Sikuli Images/others/3spins.png");
-		Pattern pat9=new Pattern("E:/Sikuli Images/others/2spins.png");
-		Pattern pat10=new Pattern("E:/Sikuli Images/others/1spins.png");
-		Pattern pat11=new Pattern("E:/Sikuli Images/others/lastspin.png");
+		String path = System.getProperty("user.dir")+"E:\\Sikuli Images\\autoplay.PNG";
+		Pattern autoplay=new Pattern("E:/Sikuli Images/GoldenCrown/autoplay.png");
+		Pattern tenspin=new Pattern("E:/Sikuli Images/GoldenCrown/ten.png");
+		Pattern pat2=new Pattern("E:/Sikuli Images/GoldenCrown/9spins.png");
+		Pattern pat3=new Pattern("E:/Sikuli Images/GoldenCrown/8spins.png");
+		Pattern pat4=new Pattern("E:/Sikuli Images/GoldenCrown/7spins.png");
+		Pattern pat5=new Pattern("E:/Sikuli Images/GoldenCrown/6spins.png");
+		Pattern pat6=new Pattern("E:/Sikuli Images/GoldenCrown/5spins.png");
+		Pattern pat7=new Pattern("E:/Sikuli Images/GoldenCrown/4spins.png");
+		Pattern pat8=new Pattern("E:/Sikuli Images/GoldenCrown/3spins.png");
+		Pattern pat9=new Pattern("E:/Sikuli Images/GoldenCrown/2spins.png");
+		Pattern pat10=new Pattern("E:/Sikuli Images/GoldenCrown/1spins.png");
+		Pattern pat11=new Pattern("E:/Sikuli Images/GoldenCrown/0spins.png");
 		
 		//selecting 10 spins by clicking auto spin icon
-		screen.click(autospin);
+		screen.wait(autoplay, 30);
+		screen.click(autoplay);
 		Thread.sleep(2000);
-		screen.click(spin);
-		Thread.sleep(1000);
+		screen.click(tenspin);
 		
 	      //comparing the number of 9spins left message
-	      Pattern credit1=new Pattern("E:/Sikuli Images/others/9spins.png");
-	      screen.wait(pat2, 5);
+	      screen.wait(pat2,20);
 	      Finder finder =new Finder(screen.capture().getImage());
-	      String ht = finder.find(credit1);
+	      String ht = finder.find(pat2);
 	      double score=20;                
 	      System.out.println("the value of ht"+" "+ht);
 		  if(finder.hasNext())
@@ -81,10 +81,10 @@ WebDriver driver;
 		  Assert.assertTrue(score > 90);
 		  
 		 //comparing the number of 8spins left message
-         Pattern pat=new Pattern("E:/Sikuli Images/others/8spins.png");
-         screen.wait(pat3, 5);
+
+         screen.wait(pat3, 20);
          Finder finder1 =new Finder(screen.capture().getImage());
-         String ht1 = finder1.find(pat);
+         String ht1 = finder1.find(pat3);
          double score1=20;                
          System.out.println("the value of ht"+" "+ht1);
          if(finder1.hasNext())
@@ -101,13 +101,13 @@ WebDriver driver;
 		 }
 		 System.out.println("Comparision value equals to: "+" "+score1 +"%");
 		 //Assert.assertEquals(100.0,score );
-		 Assert.assertTrue(score1 > 90);
+		 Assert.assertTrue(score1 > 80);
 		 
+
 		//comparing the number of 7spins left message
-         Pattern pat33=new Pattern("E:/Sikuli Images/others/7spins.png");
-         screen.wait(pat4, 5);
+         screen.wait(pat4, 20);
          Finder finder2 =new Finder(screen.capture().getImage());
-         String ht2 = finder2.find(pat33);
+         String ht2 = finder2.find(pat4);
          double score2=20;                
          System.out.println("the value of ht"+" "+ht2);
          if(finder2.hasNext())
@@ -123,13 +123,13 @@ WebDriver driver;
 		 System.out.println("Comparision failed. Test case failed");         
 		 }
 		 System.out.println("Comparision value equals to: "+" "+score2 +"%");
-		 Assert.assertTrue(score2 > 90);
+		 Assert.assertTrue(score2 > 80);
 		 
+
 		 //comparing the number of 6spins left message
-         Pattern pat44=new Pattern("E:/Sikuli Images/others/6spins.png");
-         screen.wait(pat5, 5);
+         screen.wait(pat5, 20);
          Finder finder3 =new Finder(screen.capture().getImage());
-         String ht3 = finder3.find(pat44);
+         String ht3 = finder3.find(pat5);
          double score3=20;                
          System.out.println("the value of ht"+" "+ht3);
          if(finder3.hasNext())
@@ -145,13 +145,13 @@ WebDriver driver;
 		 System.out.println("Comparision failed. Test case failed");         
 		 }
 		 System.out.println("Comparision value equals to: "+" "+score3 +"%");
-		 Assert.assertTrue(score3 > 90);
+		 Assert.assertTrue(score3 > 80);
 		 
+
 		 //comparing the number of 5spins left message
-         Pattern pat55=new Pattern("E:/Sikuli Images/others/5spins.png");
-         screen.wait(pat6, 5);
+         screen.wait(pat6, 20);
          Finder finder4 =new Finder(screen.capture().getImage());
-         String ht4 = finder4.find(pat55);
+         String ht4 = finder4.find(pat6);
          double score4=20;                
          System.out.println("the value of ht"+" "+ht4);
          if(finder4.hasNext())
@@ -167,13 +167,13 @@ WebDriver driver;
 		 System.out.println("Comparision failed. Test case failed");         
 		 }
 		 System.out.println("Comparision value equals to: "+" "+score4 +"%");
-		 Assert.assertTrue(score4 > 90);
+		 Assert.assertTrue(score4 > 80);
 		 
+
 		 //comparing the number of 4spins left message
-         Pattern pat66=new Pattern("E:/Sikuli Images/others/4spins.png");
-         screen.wait(pat7, 5);
+         screen.wait(pat7, 20);
          Finder finder5 =new Finder(screen.capture().getImage());
-         String ht5 = finder5.find(pat66);
+         String ht5 = finder5.find(pat7);
          double score5=20;                
          System.out.println("the value of ht"+" "+ht5);
          if(finder5.hasNext())
@@ -189,13 +189,13 @@ WebDriver driver;
 		 System.out.println("Comparision failed. Test case failed");         
 		 }
 		 System.out.println("Comparision value equals to: "+" "+score5 +"%");
-		 Assert.assertTrue(score5 > 90);
+		 Assert.assertTrue(score5 > 80);
 		 
+
 		 //comparing the number of 3spins left message
-         Pattern pat77=new Pattern("E:/Sikuli Images/others/3spins.png");
-         screen.wait(pat8, 5);
+         screen.wait(pat8, 20);
          Finder finder6 =new Finder(screen.capture().getImage());
-         String ht6 = finder6.find(pat77);
+         String ht6 = finder6.find(pat8);
          double score6=20;                
          System.out.println("the value of ht"+" "+ht6);
          if(finder6.hasNext())
@@ -211,13 +211,13 @@ WebDriver driver;
 		 System.out.println("Comparision failed. Test case failed");         
 		 }
 		 System.out.println("Comparision value equals to: "+" "+score6 +"%");
-		 Assert.assertTrue(score6 > 90);
+		 Assert.assertTrue(score6 > 80);
 		 
+
 		 //comparing the number of 2spins left message
-         Pattern pat88=new Pattern("E:/Sikuli Images/others/2spins.png");
-         screen.wait(pat9, 5);
+         screen.wait(pat9, 20);
          Finder finder7 =new Finder(screen.capture().getImage());
-         String ht7 = finder7.find(pat88);
+         String ht7 = finder7.find(pat9);
          double score7=20;                
          System.out.println("the value of ht"+" "+ht7);
          if(finder7.hasNext())
@@ -233,13 +233,13 @@ WebDriver driver;
 		 System.out.println("Comparision failed. Test case failed");         
 		 }
 		 System.out.println("Comparision value equals to: "+" "+score7 +"%");
-		 Assert.assertTrue(score7 > 90);
+		 Assert.assertTrue(score7 > 80);
 		 
+
 		 //comparing the number of 1spins left message
-         Pattern pat99=new Pattern("E:/Sikuli Images/others/1spins.png");
-         screen.wait(pat10, 5);
+         screen.wait(pat10, 20);
          Finder finder8 =new Finder(screen.capture().getImage());
-         String ht8 = finder8.find(pat99);
+         String ht8 = finder8.find(pat10);
          double score8=20;                
          System.out.println("the value of ht"+" "+ht8);
          if(finder8.hasNext())
@@ -256,12 +256,11 @@ WebDriver driver;
 		 }
 		 System.out.println("Comparision value equals to: "+" "+score8 +"%");
 		 Assert.assertTrue(score8 > 80);
-		 
-		 //comparing the number of Last spins left message
-         Pattern pat100=new Pattern("E:/Sikuli Images/others/lastspin.png");
-         screen.wait(pat11, 15);
+
+		 //comparing the number of 0 spins left message
+         screen.wait(pat11, 20);
          Finder finder9 =new Finder(screen.capture().getImage());
-         String ht9 = finder9.find(pat100);
+         String ht9 = finder9.find(pat11);
          double score9=20;                
          System.out.println("the value of ht"+" "+ht9);
          if(finder9.hasNext())
@@ -269,7 +268,7 @@ WebDriver driver;
 		 Match m9=finder9.next();
 		 System.out.println("Match Found with: "+(m9.getScore())*100+"%");
 		 score9=(m9.getScore())*100;
-		 System.out.println("Last Spin left. Test case passed");
+		 System.out.println("0 Spins left. Test case passed");
 		 finder9.destroy();  
 		 }         
 		 else    

@@ -7,6 +7,8 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.sikuli.script.Finder;
 import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
@@ -16,7 +18,8 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 public class GoldenCrown_Web_Balance_InsufficiantBalance_Validation {
-WebDriver driver;
+	WebDriver driver;
+	Screen screen=new Screen();
 	
 	@Given("^Chrome browser, valid URL, valid login details, Golden Crown slot game, balance, spin button and validation message$")
 	public void chrome_browser_valid_URL_valid_login_details_Golden_Crown_slot_game_balance_spin_button_and_validation_message() throws Throwable {
@@ -25,35 +28,32 @@ WebDriver driver;
 
 	@When("^Open the Golden Crown slot game by entering the valid URL in browser, enter the valid login details, transfer the balance, click on spin button till balance turns to zero and check the validation message$")
 	public void open_the_Golden_Crown_slot_game_by_entering_the_valid_URL_in_browser_enter_the_valid_login_details_transfer_the_balance_click_on_spin_button_till_balance_turns_to_zero_and_check_the_validation_message() throws Throwable {
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("transferInput")));
 		WebElement balT = driver.findElement(By.id("transferInput"));
 		balT.clear();
+		balT.sendKeys("5");
 		Thread.sleep(1000);
-		balT.sendKeys("10");
-		Thread.sleep(2000);
 		driver.findElement(By.className("Transfer_Ok_but")).click();
 		Thread.sleep(15000);
 		TakesScreenshot tsc=(TakesScreenshot)driver;
 		
 		File sct = driver.findElement(By.xpath("//*[@id='iframeSlotGame']")).getScreenshotAs(OutputType.FILE);
 		String path = System.getProperty("user.dir")+"E:\\Sikuli Images\\Win\\balance_beforeSpin_1_1.PNG";
-		Screen screen=new Screen();
-		Pattern Insuffbalance=new Pattern("E:/Sikuli Images/credits/insufficiant.png");
-		Pattern spin=new Pattern("E:/Sikuli Images/credits/spin.png");
-		Pattern creditValue=new Pattern("E:/Sikuli Images/credits/fifthBetvalue.png");
+		Pattern spin=new Pattern("E:/Sikuli Images/GoldenCrown/spin.png");
+		Pattern maxbet=new Pattern("E:/Sikuli Images/GoldenCrown/maxbet.png");
+
 
 		
-	    // Clicking the denomination and spin button
-	    screen.click(creditValue);
+	    // Clicking the max bet to select max bet value
+	    screen.click(maxbet);
 	    Thread.sleep(2000);
 	    screen.click(spin);
 	    Thread.sleep(4000);
-	    screen.click(spin);
-	    Thread.sleep(4000);
-	    screen.click(spin);
-	    Thread.sleep(4000);
+
 	
 		 //comparing the insufficiant balance message displayed or not
-	      Pattern bal=new Pattern("E:/Sikuli Images/credits/insufficiant.png");
+	      Pattern bal=new Pattern("E:/Sikuli Images/GoldenCrown/insufficiant.png");
 	      Finder finder =new Finder(screen.capture().getImage());
 	      String ht = finder.find(bal);
 	      double score=20;                
@@ -71,7 +71,7 @@ WebDriver driver;
 		  System.out.println("Comparision failed. Test case failed");         
 		  }
 		  System.out.println("Insufficiant balance message comparision value is equal to: "+" "+score +"%");
-		  Assert.assertTrue(score > 97);
+		  Assert.assertTrue(score > 95);
 	}
 
 	@Then("^Player should be blocked from playing the game when there is no balance in the account in Golden Crown game$")

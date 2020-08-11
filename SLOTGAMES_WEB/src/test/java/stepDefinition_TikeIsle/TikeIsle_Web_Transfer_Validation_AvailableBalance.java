@@ -26,7 +26,7 @@ public class TikeIsle_Web_Transfer_Validation_AvailableBalance {
 		WebElement balT = driver.findElement(By.id("transferInput"));
 		balT.clear();
 		Thread.sleep(1000);
-		balT.sendKeys("5000000");
+		balT.sendKeys("5000000000000");
 		Thread.sleep(2000);
 		driver.findElement(By.className("Transfer_Ok_but")).click();
 		Thread.sleep(5000);

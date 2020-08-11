@@ -59,15 +59,15 @@ WebDriver driver;
 		  System.out.println("Comparision failed. Test case failed");         
 		  }
 		  System.out.println("Transfering the amount to the slot game and comparision value equals to: "+" "+score +"%");
-		  Assert.assertTrue(score > 90);
+		  Assert.assertTrue(score > 88);
 		  
 		 driver.findElement(By.className("Transfer_Ok_but")).click();
-		 Thread.sleep(15000);
+		 Thread.sleep(40000);
 		 TakesScreenshot tsc=(TakesScreenshot)driver;
 		 File sct = driver.findElement(By.xpath("//*[@id='iframeSlotGame']")).getScreenshotAs(OutputType.FILE);
 		
 		  //Comparing the same amount is displayed on the slot game balance after loading 
-	      Pattern winA=new Pattern("E:/Sikuli Images/TreasureBonanza/balance.PNG");
+	      Pattern winA=new Pattern("E:/Sikuli Images/TreasureBonanza/balance1.PNG");
 	      Finder finder2 =new Finder(screen.capture().getImage());
 	      String ht2 = finder2.find(winA);
 	      double score2=20;                

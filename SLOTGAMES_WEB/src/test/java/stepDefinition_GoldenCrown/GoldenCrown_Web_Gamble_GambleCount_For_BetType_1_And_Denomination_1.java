@@ -7,6 +7,8 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.sikuli.script.Finder;
 import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
@@ -16,7 +18,8 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 public class GoldenCrown_Web_Gamble_GambleCount_For_BetType_1_And_Denomination_1 {
-WebDriver driver;
+	WebDriver driver;
+	Screen screen=new Screen();
 	
 	@Given("^Chrome browser, valid URL, valid login details, Golden Crown slot game, bet type as (\\d+)\\.(\\d+), denomination as (\\d+)\\.(\\d+), balance, spin button, win amount, gamble button, gamble amount, game info page and gamble count$")
 	public void chrome_browser_valid_URL_valid_login_details_Golden_Crown_slot_game_bet_type_as_denomination_as_balance_spin_button_win_amount_gamble_button_gamble_amount_game_info_page_and_gamble_count(int arg1, int arg2, int arg3, int arg4) throws Throwable {
@@ -25,38 +28,57 @@ WebDriver driver;
 
 	@When("^Open the Golden Crown slot game by entering the valid URL in browser, enter the valid login details, transfer the balance, select bet type as (\\d+)\\.(\\d+) & denomination as (\\d+)\\.(\\d+), click on spin button till player wins, click on gamble button and check the gamble count$")
 	public void open_the_Golden_Crown_slot_game_by_entering_the_valid_URL_in_browser_enter_the_valid_login_details_transfer_the_balance_select_bet_type_as_denomination_as_click_on_spin_button_till_player_wins_click_on_gamble_button_and_check_the_gamble_count(int arg1, int arg2, int arg3, int arg4) throws Throwable {
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("transferInput")));
 		WebElement balT = driver.findElement(By.id("transferInput"));
 		balT.clear();
 		Thread.sleep(1000);
 		balT.sendKeys("300");
-		Thread.sleep(2000);
+		Thread.sleep(1000);
 		driver.findElement(By.className("Transfer_Ok_but")).click();
-		Thread.sleep(15000);
+		Thread.sleep(3000);
 		TakesScreenshot tsc=(TakesScreenshot)driver;
 		
 		File sct = driver.findElement(By.xpath("//*[@id='iframeSlotGame']")).getScreenshotAs(OutputType.FILE);
 		String path = System.getProperty("user.dir")+"E:\\Sikuli Images\\Win\\balance_beforeSpin_1_1.PNG";
 		Screen screen=new Screen();
-		Pattern spin=new Pattern("E:/Sikuli Images/gamble/spin.png");
-		Pattern collect=new Pattern("E:/Sikuli Images/gamble/collect.png");
-		Pattern plum=new Pattern("E:/Sikuli Images/gamble/plum.png");
-		Pattern plum_3=new Pattern("E:/Sikuli Images/gamble/plum_3.png");
-		Pattern cherry=new Pattern("E:/Sikuli Images/gamble/cherry.png");
-		Pattern cherry1=new Pattern("E:/Sikuli Images/gamble/cherry1.png");
-		Pattern cherry2=new Pattern("E:/Sikuli Images/gamble/cherry2.png");
-		Pattern star_3=new Pattern("E:/Sikuli Images/gamble/star_3.png");
-		Pattern orange2=new Pattern("E:/Sikuli Images/gamble/orange2.png");
-		Pattern bell=new Pattern("E:/Sikuli Images/gamble/bell.png");
-		Pattern lemon_1=new Pattern("E:/Sikuli Images/gamble/lemon_1.png");
-		Pattern orange=new Pattern("E:/Sikuli Images/gamble/orange.png");
-		Pattern win=new Pattern("E:/Sikuli Images/gamble/win_1_1_1.png");
-		Pattern winSyb=new Pattern("E:/Sikuli Images/gamble/firstBetvalue.png");
-		Pattern gamble=new Pattern("E:/Sikuli Images/gamble/gamble_button1.png");
-		Pattern count=new Pattern("E:/Sikuli Images/gamble/gambleCount.png");
+		Pattern spin=new Pattern("E:/Sikuli Images/GoldenCrown/spin.png");
+		Pattern collect=new Pattern("E:/Sikuli Images/GoldenCrown/collect.png");
+		Pattern plum=new Pattern("E:/Sikuli Images/GoldenCrown/plum.png");
+		Pattern plum_3=new Pattern("E:/Sikuli Images/GoldenCrown/plum_3.png");
+		Pattern cherry=new Pattern("E:/Sikuli Images/GoldenCrown/cherry.png");
+		Pattern cherry1=new Pattern("E:/Sikuli Images/GoldenCrown/cherry1.png");
+		Pattern cherry2=new Pattern("E:/Sikuli Images/GoldenCrown/cherry2.png");
+		Pattern star_3=new Pattern("E:/Sikuli Images/GoldenCrown/star_1.png");
+		Pattern orange2=new Pattern("E:/Sikuli Images/GoldenCrown/orange2.png");
+		Pattern orange3=new Pattern("E:/Sikuli Images/GoldenCrown/orange3.png");
+		Pattern bell=new Pattern("E:/Sikuli Images/GoldenCrown/bell.png");
+		Pattern lemon_1=new Pattern("E:/Sikuli Images/GoldenCrown/lemon_1.png");
+		Pattern orange=new Pattern("E:/Sikuli Images/GoldenCrown/orange.png");
+		Pattern gamble=new Pattern("E:/Sikuli Images/GoldenCrown/gamble.png");
 	
-		//Selecting denomination as 0.2  
-		screen.click(winSyb);
-		Thread.sleep(2000);
+		screen.wait(spin, 30);
+		
+		//comparing denomination as 0.2  
+	     Pattern balance0=new Pattern("E:/Sikuli Images/GoldenCrown/bet1_1.PNG");
+	     Finder finder0 =new Finder(screen.capture().getImage());
+	     String ht0 = finder0.find(balance0);
+	     double score0=20;                
+	     System.out.println("the value of ht1"+" "+ht0);
+		 if(finder0.hasNext())
+		 {
+		 Match m0=finder0.next();
+		 System.out.println("Match Found with: "+(m0.getScore())*100+"%");
+		 score0=(m0.getScore())*100;
+		 System.out.println("selected dinomination is 0.2, comparision successful.");
+		 finder0.destroy();  
+		 }         
+		 else    
+		 { 
+		 System.out.println("Comparision failed. Test case failed");         
+		 }
+		 System.out.println("Win amount comparision is successful and value equal to: "+" "+score0 +"%");
+		 Assert.assertTrue(score0 > 92);
 		
 		 //Arranging the symbols to generate gamble count as 5
 		 screen.click(cherry);
@@ -79,7 +101,7 @@ WebDriver driver;
 
 		 
 		 //comparing gamble count based on win amount
-	     Pattern balance=new Pattern("E:/Sikuli Images/gamble/Win_1_1_1.PNG");
+	     Pattern balance=new Pattern("E:/Sikuli Images/GoldenCrown/win_g1_1_1.PNG");
 	     Finder finder1 =new Finder(screen.capture().getImage());
 	     String ht1 = finder1.find(balance);
 	     double score1=20;                
@@ -97,13 +119,13 @@ WebDriver driver;
 		 System.out.println("Comparision failed. Test case failed");         
 		 }
 		 System.out.println("Win amount comparision is successful and value equal to: "+" "+score1 +"%");
-		 Assert.assertTrue(score1 > 97);
+		 Assert.assertTrue(score1 > 92);
 		 
 		 screen.click(gamble);
 		 Thread.sleep(3000);
 		 
 		  //comparing the gamble count based on the win amount
-	      Pattern winA=new Pattern("E:/Sikuli Images/gamble/gambleCount.png");
+	      Pattern winA=new Pattern("E:/Sikuli Images/GoldenCrown/gambleCount.png");
 	      Finder finder2 =new Finder(screen.capture().getImage());
 	      String ht2 = finder2.find(winA);
 	      double score2=20;                
@@ -121,7 +143,7 @@ WebDriver driver;
 		  System.out.println("Comparision failed. Test case failed");         
 		  }
 		  System.out.println("Gamble count comparision after Win: "+" "+score2 +"%");
-		  Assert.assertTrue(score2 > 95);
+		  Assert.assertTrue(score2 > 90);
 		  Thread.sleep(5000);
 		  
 		  //Arranging the symbols to generate gamble count as 4
@@ -133,7 +155,7 @@ WebDriver driver;
 		  Thread.sleep(6000);
 		  
 		 //comparing gamble count based on win amount
-	     Pattern balance1=new Pattern("E:/Sikuli Images/gamble/Win_1_1_2.PNG");
+	     Pattern balance1=new Pattern("E:/Sikuli Images/GoldenCrown/win_g1_1_2.PNG");
 	     Finder finder11 =new Finder(screen.capture().getImage());
 	     String ht11 = finder11.find(balance1);
 	     double score11=20;                
@@ -157,7 +179,7 @@ WebDriver driver;
 		 Thread.sleep(3000);
 		 
 		  //comparing the gamble count based on the win amount
-	      Pattern winB=new Pattern("E:/Sikuli Images/gamble/gambleCount_2.png");
+	      Pattern winB=new Pattern("E:/Sikuli Images/GoldenCrown/gambleCount_2.png");
 	      Finder finder22 =new Finder(screen.capture().getImage());
 	      String ht22 = finder22.find(winB);
 	      double score22=20;                
@@ -175,7 +197,7 @@ WebDriver driver;
 		  System.out.println("Comparision failed. Test case failed");         
 		  }
 		  System.out.println("Gamble count comparision after Win: "+" "+score22 +"%");
-		  Assert.assertTrue(score22 > 95);
+		  Assert.assertTrue(score22 > 90);
 		  Thread.sleep(5000);
 		  
 		  //Arranging the symbols to generate gamble count as 3
@@ -184,7 +206,7 @@ WebDriver driver;
 		  screen.click(plum_3);
 		  Thread.sleep(1000);
 		  screen.click(star_3);
-		  Thread.sleep(1000);
+		  Thread.sleep(1000);		  
 		  screen.click(lemon_1);
 		  Thread.sleep(1000);
 		  screen.click(cherry2);
@@ -197,7 +219,7 @@ WebDriver driver;
 		  Thread.sleep(6000);
 		  
 		 //comparing gamble count based on win amount
-	     Pattern Win3=new Pattern("E:/Sikuli Images/gamble/Win_1_1_3.PNG");
+	     Pattern Win3=new Pattern("E:/Sikuli Images/GoldenCrown/win_g1_1_3.PNG");
 	     Finder finder12 =new Finder(screen.capture().getImage());
 	     String ht12 = finder12.find(Win3);
 	     double score12=20;                
@@ -221,7 +243,7 @@ WebDriver driver;
 		 Thread.sleep(3000);
 		 
 		  //comparing the gamble count based on the win amount
-	      Pattern winBC=new Pattern("E:/Sikuli Images/gamble/gambleCount_3.png");
+	      Pattern winBC=new Pattern("E:/Sikuli Images/GoldenCrown/gambleCount_3.png");
 	      Finder finder21 =new Finder(screen.capture().getImage());
 	      String ht21 = finder21.find(winBC);
 	      double score21=20;                
@@ -239,7 +261,7 @@ WebDriver driver;
 		  System.out.println("Comparision failed. Test case failed");         
 		  }
 		  System.out.println("Gamble count comparision after Win: "+" "+score21 +"%");
-		  Assert.assertTrue(score21 > 95);
+		  Assert.assertTrue(score21 > 90);
 		  Thread.sleep(5000);
 		  
 		  
@@ -269,10 +291,10 @@ WebDriver driver;
 		  screen.click(orange2);
 		  Thread.sleep(1000);
 		  screen.click(spin);
-		  Thread.sleep(6000);
+		  Thread.sleep(8000);
 		  
 		 //comparing gamble count based on win amount
-	     Pattern Win4=new Pattern("E:/Sikuli Images/gamble/Win_1_1_4.PNG");
+	     Pattern Win4=new Pattern("E:/Sikuli Images/GoldenCrown/win_g1_1_4.PNG");
 	     Finder finder13 =new Finder(screen.capture().getImage());
 	     String ht13 = finder13.find(Win4);
 	     double score13=20;                
@@ -282,7 +304,7 @@ WebDriver driver;
 		 Match m13=finder13.next();
 		 System.out.println("Match Found with: "+(m13.getScore())*100+"%");
 		 score13=(m13.getScore())*100;
-		 System.out.println("If the win amount is 2.00, gamble count should be 2.");
+		 System.out.println("If the win amount is 2.40, gamble count should be 2.");
 		 finder13.destroy();  
 		 }         
 		 else    
@@ -291,12 +313,13 @@ WebDriver driver;
 		 }
 		 System.out.println("Win amount comparision is successful and value equal to: "+" "+score13 +"%");
 		 Assert.assertTrue(score13 > 90);
+		 Thread.sleep(2000);
 		 
 		 screen.click(gamble);
 		 Thread.sleep(3000);
 		 
 		  //comparing the gamble count based on the win amount
-	      Pattern winBD=new Pattern("E:/Sikuli Images/gamble/gambleCount_4.png");
+	      Pattern winBD=new Pattern("E:/Sikuli Images/GoldenCrown/gambleCount_4.png");
 	      Finder finder23 =new Finder(screen.capture().getImage());
 	      String ht23 = finder23.find(winBD);
 	      double score23=20;                
@@ -314,19 +337,20 @@ WebDriver driver;
 		  System.out.println("Comparision failed. Test case failed");         
 		  }
 		  System.out.println("Gamble count comparision after Win: "+" "+score23 +"%");
-		  Assert.assertTrue(score23 > 95);
+		  Assert.assertTrue(score23 > 90);
 		  Thread.sleep(5000);
 		  
 		  //Arranging the symbols to generate gamble count as 1
 		  screen.click(collect);
 		  Thread.sleep(3000);
-		  screen.click(orange2);
+		  screen.click(orange3);
 		  Thread.sleep(2000);
 		  screen.click(spin);
 		  Thread.sleep(6000);
 		  
 		  //comparing gamble count based on win amount
-	     Pattern Win33=new Pattern("E:/Sikuli Images/gamble/Win_1_1_5.PNG");
+	     Pattern Win33=new Pattern("E:/Sikuli Images/GoldenCrown/win_g1_1_5.PNG");
+	    // screen.wait(Win33, 30);
 	     Finder finder123 =new Finder(screen.capture().getImage());
 	     String ht123 = finder123.find(Win33);
 	     double score123=20;                
@@ -345,12 +369,13 @@ WebDriver driver;
 		 }
 		 System.out.println("Win amount comparision is successful and value equal to: "+" "+score123 +"%");
 		 Assert.assertTrue(score123 > 90);
+		 Thread.sleep(2000);
 		 
 		 screen.click(gamble);
 		 Thread.sleep(3000);
 		 
 		  //comparing the gamble count based on the win amount
-	      Pattern winBDC=new Pattern("E:/Sikuli Images/gamble/gambleCount_5.png");
+	      Pattern winBDC=new Pattern("E:/Sikuli Images/GoldenCrown/gambleCount_5.png");
 	      Finder finder25 =new Finder(screen.capture().getImage());
 	      String ht25 = finder25.find(winBDC);
 	      double score25=20;                
@@ -368,7 +393,7 @@ WebDriver driver;
 		  System.out.println("Comparision failed. Test case failed");         
 		  }
 		  System.out.println("Gamble count comparision after Win: "+" "+score25 +"%");
-		  Assert.assertTrue(score25 > 95);
+		  Assert.assertTrue(score25 > 90);
 		  Thread.sleep(5000);
 		  
 		  //Arranging the symbols to generate win amount more than 7 and checking gamble link should be disabled
@@ -380,7 +405,8 @@ WebDriver driver;
 		  Thread.sleep(6000);
 		  
 		  //comparing gamble count based on win amount
-	     Pattern Win331=new Pattern("E:/Sikuli Images/gamble/Win_1_1_6.PNG");
+	     Pattern Win331=new Pattern("E:/Sikuli Images/GoldenCrown/win_g1_1_6.PNG");
+	     //screen.wait(Win331, 30);
 	     Finder finder1231 =new Finder(screen.capture().getImage());
 	     String ht1231 = finder1231.find(Win331);
 	     double score1231=20;                
@@ -390,7 +416,7 @@ WebDriver driver;
 		 Match m1231=finder1231.next();
 		 System.out.println("Match Found with: "+(m1231.getScore())*100+"%");
 		 score1231=(m1231.getScore())*100;
-		 System.out.println("If the win amount is exceeds 7 YSI, gamble link should be disabled.");
+		 System.out.println("If the win amount is exceeds 7 YSI, gamble link should be disabled. Now win is 9.20 YSI");
 		 finder1231.destroy();  
 		 }         
 		 else    
@@ -399,10 +425,10 @@ WebDriver driver;
 		 }
 		 System.out.println("Win amount comparision is successful and value equal to: "+" "+score1231 +"%");
 		 Assert.assertTrue(score1231 > 90);
+		 Thread.sleep(2000);
 		 
-		 
-		  //comparing the gamble count based on the win amount
-	      Pattern winBF=new Pattern("E:/Sikuli Images/gamble/gamble_disabled.png");
+		  //gamble button should not be visible hence MaxBet button comparing
+	      Pattern winBF=new Pattern("E:/Sikuli Images/GoldenCrown/maxbet.png");
 	      Finder finder26 =new Finder(screen.capture().getImage());
 	      String ht26 = finder26.find(winBF);
 	      double score26=20;                
@@ -412,7 +438,7 @@ WebDriver driver;
 		  Match m26=finder26.next();
 		  System.out.println("Match Found with: "+(m26.getScore())*100+"%");
 		  score26=(m26.getScore())*100;
-		  System.out.println("Gamble count comparision completed successfully. Gamble link is disabled.");
+		  System.out.println("Gamble count comparision completed successfully. Gamble link is not visible.");
 		  finder26.destroy();  
 		  }         
 		  else    
@@ -420,7 +446,7 @@ WebDriver driver;
 		  System.out.println("Comparision failed. Test case failed");         
 		  }
 		  System.out.println("Gamble link comparision after Win: "+" "+score26 +"%");
-		  Assert.assertTrue(score26 > 95);	  
+		  Assert.assertTrue(score26 > 90);	  
 	}
 
 	@Then("^Gamble count should be displayed based on win amount and gamble max amount configured on the game info page for bet type (\\d+)\\.(\\d+) & denomination (\\d+)\\.(\\d+) in Golden Crown game$")

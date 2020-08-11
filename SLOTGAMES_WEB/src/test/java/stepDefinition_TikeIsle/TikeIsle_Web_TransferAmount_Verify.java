@@ -32,7 +32,7 @@ WebDriver driver;
 		balT.sendKeys("300");
 		Thread.sleep(2000);
 		driver.findElement(By.className("Transfer_Ok_but")).click();
-		Thread.sleep(15000);
+		Thread.sleep(5000);
 		
 		String path = System.getProperty("user.dir")+"E:\\Sikuli Images\\Win\\balance_beforeSpin_1_1.PNG";
 		Screen screen=new Screen();
@@ -42,6 +42,7 @@ WebDriver driver;
 		 TakesScreenshot tsc=(TakesScreenshot)driver;
 		 File sct = driver.findElement(By.xpath("//*[@id='iframeSlotGame']")).getScreenshotAs(OutputType.FILE);
 		
+		 screen.wait(home, 30);
 		  //Comparing the same amount is displayed on the slot game balance after loading
 	      Pattern winA=new Pattern("E:/Sikuli Images/Tiki Isle/balance.PNG");
 	      Finder finder2 =new Finder(screen.capture().getImage());
@@ -53,14 +54,14 @@ WebDriver driver;
 		  Match m2=finder2.next();
 		  System.out.println("Match Found with: "+(m2.getScore())*100+"%");
 		  score2=(m2.getScore())*100;
-		  System.out.println("Same amount is displayed on the balance section and comparision successfull.");
+		  System.out.println("Same amount 300 should be displayed on the balance section and comparision successfull.");
 		  finder2.destroy();  
 		  }         
 		  else    
 		  { 
 		  System.out.println("Comparision failed. Test case failed");         
 		  }
-		  System.out.println("Same amount is displayed on the balance section and comparision value is equal to: "+" "+score2 +"%");
+		  System.out.println("Same amount 300 should be displayed on the balance section and comparision value is equal to: "+" "+score2 +"%");
 		  Assert.assertTrue(score2 > 95);
 	}
 

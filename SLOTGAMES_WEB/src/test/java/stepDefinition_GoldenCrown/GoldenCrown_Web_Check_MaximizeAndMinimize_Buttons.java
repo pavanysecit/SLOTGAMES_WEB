@@ -7,6 +7,8 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.sikuli.script.Finder;
 import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
@@ -16,7 +18,8 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 public class GoldenCrown_Web_Check_MaximizeAndMinimize_Buttons {
-WebDriver driver;
+	WebDriver driver;
+	Screen screen=new Screen();
 	
 	@Given("^Chrome browser, valid URL, valid login details, Golden Crown slot game, maximize button and minimize button$")
 	public void chrome_browser_valid_URL_valid_login_details_Golden_Crown_slot_game_maximize_button_and_minimize_button() throws Throwable {
@@ -25,31 +28,32 @@ WebDriver driver;
 
 	@When("^Open the Golden Crown slot game by entering the valid URL in browser, enter the valid login details, transfer the balance, click on maximize button and click on minimize button$")
 	public void open_the_Golden_Crown_slot_game_by_entering_the_valid_URL_in_browser_enter_the_valid_login_details_transfer_the_balance_click_on_maximize_button_and_click_on_minimize_button() throws Throwable {
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("transferInput")));
 		WebElement balT = driver.findElement(By.id("transferInput"));
 		balT.clear();
 		Thread.sleep(1000);
 		balT.sendKeys("300");
-		Thread.sleep(2000);
+		Thread.sleep(1000);
 		driver.findElement(By.className("Transfer_Ok_but")).click();
-		Thread.sleep(15000);
+		Thread.sleep(3000);
 		TakesScreenshot tsc=(TakesScreenshot)driver;
 		
 		File sct = driver.findElement(By.xpath("//*[@id='iframeSlotGame']")).getScreenshotAs(OutputType.FILE);
 		String path = System.getProperty("user.dir")+"E:\\Sikuli Images\\Win\\balance_beforeSpin_1_1.PNG";
-		Screen screen=new Screen();
-		Pattern url=new Pattern("E:/Sikuli Images/others/url.png");
-		Pattern settings=new Pattern("E:/Sikuli Images/others/settings.png");
-		Pattern min=new Pattern("E:/Sikuli Images/others/minimize.png");
-		Pattern max=new Pattern("E:/Sikuli Images/others/maximize.png");
+		Pattern url=new Pattern("E:/Sikuli Images/GoldenCrown/url.png");
+		Pattern min=new Pattern("E:/Sikuli Images/GoldenCrown/minimize.png");
+		Pattern max=new Pattern("E:/Sikuli Images/GoldenCrown/maximize.png");
+		Pattern spin=new Pattern("E:/Sikuli Images/GoldenCrown/spin.png");
 		
 		 //Clicking on setting icon and then clicking on maximize icon 
-		 screen.click(settings);
-		 Thread.sleep(3000);
+		 screen.wait(spin, 30);
+		 
 		 screen.click(max);
 		 Thread.sleep(3000);
 		 
 		  //if the screen is maximized, comparing URL bar should not be visible
-	      Pattern credit1=new Pattern("E:/Sikuli Images/others/url.png");
+	      Pattern credit1=new Pattern("E:/Sikuli Images/GoldenCrown/url.png");
 	      Finder finder =new Finder(screen.capture().getImage());
 	      String ht = finder.find(credit1);
 	      double score=20;                
@@ -70,11 +74,11 @@ WebDriver driver;
 		  Assert.assertFalse(score > 97);
 		  
 		 //Clicking on manimize icon 
-		 screen.click(settings);
+		 screen.click(min);
 		 Thread.sleep(3000);
 		 
 		  //if the screen is minimized, comparing URL bar should  be visible
-	      Pattern winA=new Pattern("E:/Sikuli Images/others/url.PNG");
+	      Pattern winA=new Pattern("E:/Sikuli Images/GoldenCrown/url.PNG");
 	      Finder finder2 =new Finder(screen.capture().getImage());
 	      String ht2 = finder2.find(winA);
 	      double score2=20;                
@@ -92,7 +96,7 @@ WebDriver driver;
 		  System.out.println("Comparision failed. Test case failed");         
 		  }
 		  System.out.println("URl bar should be visible if the bar is minimized and comparision value is equal to: "+" "+score2 +"%");
-		  Assert.assertTrue(score2 > 85);
+		  Assert.assertTrue(score2 > 80);
 		  Thread.sleep(2000);
 	}
 

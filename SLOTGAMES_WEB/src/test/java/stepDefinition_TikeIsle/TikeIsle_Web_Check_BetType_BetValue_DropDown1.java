@@ -8,6 +8,8 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.sikuli.script.Finder;
 import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
@@ -19,6 +21,7 @@ import cucumber.api.java.en.When;
 
 public class TikeIsle_Web_Check_BetType_BetValue_DropDown1 {
 	WebDriver driver;
+	Screen screen=new Screen();
 	
 	@Given("^Chrome browser, valid URL, valid login details, Tike Isle slot game, bet type as (\\d+)\\.(\\d+) and bet value as (\\d+)\\.(\\d+),(\\d+)\\.(\\d+),(\\d+),(\\d+),(\\d+)$")
 	public void chrome_browser_valid_URL_valid_login_details_Tike_Isle_slot_game_bet_type_as_and_bet_value_as(int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9) throws Throwable {
@@ -27,21 +30,22 @@ public class TikeIsle_Web_Check_BetType_BetValue_DropDown1 {
 
 	@When("^Open the Tike Isle slot game by entering the valid URL in browser, enter the valid login details, select the bet type as (\\d+)\\.(\\d+) and check the bet value$")
 	public void open_the_Tike_Isle_slot_game_by_entering_the_valid_URL_in_browser_enter_the_valid_login_details_select_the_bet_type_as_and_check_the_bet_value(int arg1, int arg2) throws Throwable {
+		  WebDriverWait wait = new WebDriverWait(driver, 10);
+		  wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("transferInput")));
 		  WebElement balT = driver.findElement(By.id("transferInput"));
 		  balT.clear();
 		  Thread.sleep(1000);
 		  balT.sendKeys("300");
-		  Thread.sleep(5000);
+		  Thread.sleep(2000);
 		  driver.findElement(By.className("Transfer_Ok_but")).click();
-		  Thread.sleep(15000);
-		  TakesScreenshot tsc=(TakesScreenshot)driver;
-		
-		  File sct = driver.findElement(By.xpath("//*[@id='iframeSlotGame']")).getScreenshotAs(OutputType.FILE);
-		  String path = System.getProperty("user.dir")+"E:\\Sikuli Images\\secondBetvalue.PNG";
-		  Screen screen=new Screen();
-        
-        //comparing the credit value should be 0.01
-	      Pattern credit1=new Pattern("E:/Sikuli Images/Tiki Isle/creditvalue1.png");
+		  Thread.sleep(2000);
+		  
+		  Pattern spin=new Pattern("E:/Sikuli Images/Tiki Isle/spin.png");
+		  Pattern betvalues1=new Pattern("E:/Sikuli Images/Tiki Isle/betvalues1.png");
+		  screen.wait(spin, 30);
+	      
+		  //comparing the credit value should be 0.02
+	      Pattern credit1=new Pattern("E:/Sikuli Images/Tiki Isle/creditvalue1_1.png");
 	      Finder finder =new Finder(screen.capture().getImage());
 	      String ht = finder.find(credit1);
 	      double score=20;                
@@ -60,14 +64,19 @@ public class TikeIsle_Web_Check_BetType_BetValue_DropDown1 {
 		  }
 		  System.out.println("Credit comparision value equals to: "+" "+score +"%");
 		  Assert.assertTrue(score > 95);
-       
+	   
+		  //clicking on 0.4 link to open the bet values
+		  Thread.sleep(1000);
+		  screen.click(betvalues1);
+		  Thread.sleep(2000);
+		  
 		 //comparing the available denomination values
 		 Pattern pat=new Pattern("E:/Sikuli Images/Tiki Isle/betvalues_1.PNG");
-       Finder finder1 =new Finder(screen.capture().getImage());
-       String ht1 = finder1.find(pat);
-       double score1=20;                
-       System.out.println("the value of ht"+" "+ht1);
-       if(finder1.hasNext())
+	     Finder finder1 =new Finder(screen.capture().getImage());
+	     String ht1 = finder1.find(pat);
+	     double score1=20;                
+	     System.out.println("the value of ht"+" "+ht1);
+	     if(finder1.hasNext())
 		 {
 		 Match m1=finder1.next();
 		 System.out.println("Match Found with: "+(m1.getScore())*100+"%");

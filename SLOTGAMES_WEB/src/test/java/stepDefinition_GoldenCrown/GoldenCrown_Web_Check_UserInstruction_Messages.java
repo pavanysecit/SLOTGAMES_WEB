@@ -7,6 +7,8 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.sikuli.script.Finder;
 import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
@@ -16,7 +18,8 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 public class GoldenCrown_Web_Check_UserInstruction_Messages {
-WebDriver driver;
+	WebDriver driver;
+	Screen screen=new Screen();
 	
 	@Given("^Chrome browser, valid URL, valid login details, Golden Crown slot game, balance, spin button and user instruction message$")
 	public void chrome_browser_valid_URL_valid_login_details_Golden_Crown_slot_game_balance_spin_button_and_user_instruction_message() throws Throwable {
@@ -25,25 +28,25 @@ WebDriver driver;
 
 	@When("^Open the Golden Crown hot slot game by entering the valid URL in browser, enter the valid login details, transfer the balance, click on spin button and check the user instruction messages$")
 	public void open_the_Golden_Crown_hot_slot_game_by_entering_the_valid_URL_in_browser_enter_the_valid_login_details_transfer_the_balance_click_on_spin_button_and_check_the_user_instruction_messages() throws Throwable {
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("transferInput")));
 		WebElement balT = driver.findElement(By.id("transferInput"));
 		balT.clear();
 		Thread.sleep(1000);
 		balT.sendKeys("300");
-		Thread.sleep(2000);
+		Thread.sleep(1000);
 		driver.findElement(By.className("Transfer_Ok_but")).click();
-		Thread.sleep(15000);
+		Thread.sleep(3000);
 		TakesScreenshot tsc=(TakesScreenshot)driver;
 		
 		File sct = driver.findElement(By.xpath("//*[@id='iframeSlotGame']")).getScreenshotAs(OutputType.FILE);
 		String path = System.getProperty("user.dir")+"E:\\Sikuli Images\\Win\\balance_beforeSpin_1_1.PNG";
-		Screen screen=new Screen();
-		Pattern spin=new Pattern("E:/Sikuli Images/others/spin.png");
-		Pattern home=new Pattern("E:/Sikuli Images/others/goodluck.png");
-		Pattern games=new Pattern("E:/Sikuli Images/others/placebet.png");
+		Pattern spin=new Pattern("E:/Sikuli Images/GoldenCrown/spin.png");
 
+		screen.wait(spin, 30);
 		 
 		  //Comparing Place your bet message is displaying
-	      Pattern credit1=new Pattern("E:/Sikuli Images/others/placebet.png");
+	      Pattern credit1=new Pattern("E:/Sikuli Images/GoldenCrown/placebet.png");
 	      Finder finder =new Finder(screen.capture().getImage());
 	      String ht = finder.find(credit1);
 	      double score=20;                
@@ -61,14 +64,14 @@ WebDriver driver;
 		  System.out.println("Comparision failed. Test case failed");         
 		  }
 		  System.out.println("Place your bet message is displayed and comparision value equals to: "+" "+score +"%");
-		  Assert.assertTrue(score > 97);
+		  Assert.assertTrue(score > 95);
 		  
 		 //Clicking on spin button
 		 screen.click(spin);
 		 Thread.sleep(1000);
 		 
-		  //After clicking on home button, golden hot game should not be visible
-	      Pattern winA=new Pattern("E:/Sikuli Images/others/goodluck.PNG");
+		  //checking good luck message after spin
+	      Pattern winA=new Pattern("E:/Sikuli Images/GoldenCrown/goodluck.PNG");
 	      Finder finder2 =new Finder(screen.capture().getImage());
 	      String ht2 = finder2.find(winA);
 	      double score2=20;                

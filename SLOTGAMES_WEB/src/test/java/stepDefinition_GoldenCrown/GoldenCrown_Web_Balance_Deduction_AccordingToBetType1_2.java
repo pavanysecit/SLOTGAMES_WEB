@@ -7,6 +7,8 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.sikuli.script.Finder;
 import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
@@ -17,7 +19,8 @@ import cucumber.api.java.en.When;
 
 public class GoldenCrown_Web_Balance_Deduction_AccordingToBetType1_2 {
 WebDriver driver;
-	
+Screen screen=new Screen();
+
 	@Given("^Chrome browser, valid URL, valid login details, Golden Crown game, bet type as (\\d+)\\.(\\d+), bet value as (\\d+)\\.(\\d+), balance and spin button$")
 	public void chrome_browser_valid_URL_valid_login_details_Golden_Crown_game_bet_type_as_bet_value_as_balance_and_spin_button(int arg1, int arg2, int arg3, int arg4) throws Throwable {
 		this.driver =  GoldenCrown_Web_URL_Login.getDriver();
@@ -25,6 +28,8 @@ WebDriver driver;
 
 	@When("^Open the Golden Crown slot game by entering the valid URL in browser, enter the valid login details, select the bet type as (\\d+)\\.(\\d+), click on spin button and check the balance$")
 	public void open_the_Golden_Crown_slot_game_by_entering_the_valid_URL_in_browser_enter_the_valid_login_details_select_the_bet_type_as_click_on_spin_button_and_check_the_balance(int arg1, int arg2) throws Throwable {
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("transferInput")));
 		WebElement balT = driver.findElement(By.id("transferInput"));
 		balT.clear();
 		Thread.sleep(1000);
@@ -36,21 +41,16 @@ WebDriver driver;
 		
 		File sct = driver.findElement(By.xpath("//*[@id='iframeSlotGame']")).getScreenshotAs(OutputType.FILE);
 		String path = System.getProperty("user.dir")+"E:\\Sikuli Images\\secondBetvalue.PNG";
-		Screen screen=new Screen();
-		Pattern pat1=new Pattern("E:/Sikuli Images/Bet Values/secondBetvalue.png");
-		Pattern spin=new Pattern("E:/Sikuli Images/Bet Values/spin.png");
+		Pattern betvalue=new Pattern("E:/Sikuli Images/GoldenCrown/betvalue.png");
+		Pattern spin=new Pattern("E:/Sikuli Images/GoldenCrown/spin.png");
 
-		  //String ht = finder.find(pat);
-		  Thread.sleep(15000);
+		  screen.wait(spin, 30);
 		  //clicking on Bet VALUE
-           screen.click(pat1);
+           screen.click(betvalue);
            Thread.sleep(3000);
-          //CLICKING ON Spin button
-          screen.click(spin);
-          Thread.sleep(4000);
           
           //comparing the credit value should be 0.01
-	      Pattern credit1=new Pattern("E:/Sikuli Images/Bet Values/creditvalue1.png");
+	      Pattern credit1=new Pattern("E:/Sikuli Images/GoldenCrown/credit1.png");
 	      Finder finder =new Finder(screen.capture().getImage());
 	      String ht = finder.find(credit1);
 	      double score=20;                
@@ -60,7 +60,7 @@ WebDriver driver;
 		  Match m=finder.next();
 		  System.out.println("Match Found with: "+(m.getScore())*100+"%");
 		  score=(m.getScore())*100;
-		  System.out.println("Credit value comparision happened successfully. Test case passed");
+		  System.out.println("Credit value is 0.01 & comparision happened successfully. Test case passed");
 		  finder.destroy();  
 		  }         
 		  else    
@@ -68,10 +68,15 @@ WebDriver driver;
 		  System.out.println("Comparision failed. Test case failed");         
 		  }
 		  System.out.println("Credit comparision value equals to: "+" "+score +"%");
-		  Assert.assertTrue(score > 97);
+		  Assert.assertTrue(score > 95);
          
+		  
+          //CLICKING ON Spin button
+          screen.click(spin);
+          screen.wait(spin, 10);
+          
 		 //comparing the balance after spinning should be deducted by 0.4 value
-		 Pattern pat=new Pattern("E:/Sikuli Images/Bet Values/balance1.png");
+		 Pattern pat=new Pattern("E:/Sikuli Images/GoldenCrown/balance1_2.png");
          Finder finder1 =new Finder(screen.capture().getImage());
          String ht1 = finder1.find(pat);
          double score1=20;                
@@ -81,16 +86,16 @@ WebDriver driver;
 		 Match m1=finder1.next();
 		 System.out.println("Match Found with: "+(m1.getScore())*100+"%");
 		 score1=(m1.getScore())*100;
-		 System.out.println("Comparision happened successfully. Test case passed");
+		 System.out.println("After spin, balance is 299.40 & Comparision happened successfully. Test case passed");
 		 finder1.destroy();  
 		 }         
 		 else    
 		 { 
 		 System.out.println("Comparision failes. Test case failed");         
 		 }
-		 System.out.println("Comparision value equals to: "+" "+score1 +"%");
+		 System.out.println("Balance comparision for 299.40 is equals to: "+" "+score1 +"%");
 		 //Assert.assertEquals(100.0,score );
-		 Assert.assertTrue(score1 > 97);
+		 Assert.assertTrue(score1 > 93);
      	}
 
 	@Then("^Balance should get deducted by (\\d+)\\.(\\d+) as bet type is selected as (\\d+)\\.(\\d+) in Golden Crown game$")
