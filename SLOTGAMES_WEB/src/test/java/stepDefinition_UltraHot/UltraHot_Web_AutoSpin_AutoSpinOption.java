@@ -1,6 +1,7 @@
-package stepDefinition_GoldenCrown;
+package stepDefinition_UltraHot;
 
 import java.io.File;
+
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -13,21 +14,22 @@ import org.sikuli.script.Finder;
 import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Screen;
+
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
-public class GoldenCrown_Web_AutoSpin_AutoSpinOption {
+public class UltraHot_Web_AutoSpin_AutoSpinOption {
 	WebDriver driver;
 	Screen screen=new Screen();
 	
-	@Given("^Chrome browser, valid URL, valid login details, Golden Crown slot game, balance, spin button, auto spin button, auto spins option and number of spins left message$")
-	public void chrome_browser_valid_URL_valid_login_details_Golden_Crown_slot_game_balance_spin_button_auto_spin_button_auto_spins_option_and_number_of_spins_left_message() throws Throwable {
-		this.driver =  GoldenCrown_Web_URL_Login.getDriver();
+	@Given("^Chrome browser, valid URL, valid login details, Ultra Hot slot game, balance, spin button, auto spin button, auto spins option and number of spins left message$")
+	public void chrome_browser_valid_URL_valid_login_details_Ultra_Hot_slot_game_balance_spin_button_auto_spin_button_auto_spins_option_and_number_of_spins_left_message() throws Throwable {
+		this.driver =  UltraHot_Web_URL_Login.getDriver();
 	}
 
-	@When("^Open the Golden Crown slot game by entering the valid URL in browser, enter the valid login details, transfer the balance, click on auto spin option under auto spin drop down and check the player instruction message$")
-	public void open_the_Golden_Crown_slot_game_by_entering_the_valid_URL_in_browser_enter_the_valid_login_details_transfer_the_balance_click_on_auto_spin_option_under_auto_spin_drop_down_and_check_the_player_instruction_message() throws Throwable {
+	@When("^Open the Ultra Hot slot game by entering the valid URL in browser, enter the valid login details, transfer the balance, click on auto spin option under auto spin drop down and check the player instruction message$")
+	public void open_the_Ultra_Hot_slot_game_by_entering_the_valid_URL_in_browser_enter_the_valid_login_details_transfer_the_balance_click_on_auto_spin_option_under_auto_spin_drop_down_and_check_the_player_instruction_message() throws Throwable {
 		WebDriverWait wait = new WebDriverWait(driver, 10);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("transferInput")));
 		WebElement balT = driver.findElement(By.id("transferInput"));
@@ -40,10 +42,10 @@ public class GoldenCrown_Web_AutoSpin_AutoSpinOption {
 		
 		File sct = driver.findElement(By.xpath("//*[@id='iframeSlotGame']")).getScreenshotAs(OutputType.FILE);
 		String path = System.getProperty("user.dir")+"E:\\Sikuli Images\\AutoSpins.PNG";
-		Pattern play=new Pattern("E:/Sikuli Images/GoldenCrown/autoplay.png");
-		Pattern spin=new Pattern("E:/Sikuli Images/GoldenCrown/spin.png");
-		Pattern pat1=new Pattern("E:/Sikuli Images/GoldenCrown/autospin.png");
-		Pattern auto=new Pattern("E:/Sikuli Images/GoldenCrown/auto.png");
+		Pattern play=new Pattern("E:/Sikuli Images/UltraHot/autoplay.png");
+		Pattern spin=new Pattern("E:/Sikuli Images/UltraHot/spin.png");
+		Pattern pat1=new Pattern("E:/Sikuli Images/UltraHot/autospin.png");
+		Pattern auto=new Pattern("E:/Sikuli Images/UltraHot/auto.png");
 		
 		//selecting auto spins by clicking auto spin icon
 		screen.wait(spin, 30);
@@ -97,9 +99,9 @@ public class GoldenCrown_Web_AutoSpin_AutoSpinOption {
 		
 	}
 
-	@Then("^System should keep performing the spins in Golden Crown slot game$")
-	public void system_should_keep_performing_the_spins_in_Golden_Crown_slot_game() throws Throwable {
-		 Thread.sleep(3000);
-		 //driver.quit();
+	@Then("^System should keep performing the spins in Ultra Hot slot game$")
+	public void system_should_keep_performing_the_spins_in_Ultra_Hot_slot_game() throws Throwable {
+		Thread.sleep(3000);
+		driver.quit();
 	}
 }
