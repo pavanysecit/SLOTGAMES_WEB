@@ -60,10 +60,13 @@ public class UltraHot_Web_AutoSpin_Validations_GamblePage {
 		Pattern balance_win=new Pattern("E:/Sikuli Images/UltraHot/balance_afterSpin.png");	
 		Pattern credit_d=new Pattern("E:/Sikuli Images/UltraHot/credit_d.png");
 		Pattern betvalue=new Pattern("E:/Sikuli Images/UltraHot/betvalue.png");
+		Pattern betvalue_d=new Pattern("E:/Sikuli Images/UltraHot/betvalue_d.png");
 		Pattern credit3=new Pattern("E:/Sikuli Images/UltraHot/credit3.png");
 		Pattern bet3_5=new Pattern("E:/Sikuli Images/UltraHot/bet3_5.png");
 		Pattern maxbet=new Pattern("E:/Sikuli Images/UltraHot/maxbet.png");
+		Pattern turbo=new Pattern("E:/Sikuli Images/UltraHot/turbo.png");
 		Pattern ok=new Pattern("E:/Sikuli Images/UltraHot/ok.png");
+		Pattern win_1=new Pattern("E:/Sikuli Images/UltraHot/win_1.png");
 		Pattern insufficiant=new Pattern("E:/Sikuli Images/UltraHot/insufficiant.png");
 		
 		//selecting credit value as 1
@@ -129,6 +132,26 @@ public class UltraHot_Web_AutoSpin_Validations_GamblePage {
 		screen.click(collect);
 		Thread.sleep(2000);
 		
+		//Checking win amount should be displayed on reels during autoplay
+        Finder finder31 =new Finder(screen.capture().getImage());
+        String ht31 = finder31.find(win_1);
+        double score31=20;                
+        System.out.println("the value of ht3"+" "+ht31);
+	    if(finder31.hasNext())
+	    {
+	    Match m31=finder31.next();
+	    System.out.println("Match Found with: "+(m31.getScore())*100+"%");
+	    score31=(m31.getScore())*100;
+	    System.out.println("Win amount is displayed in win section and value is 1.20 YSI & balance comparision completed successfully.");
+	    finder31.destroy();  
+	    }         
+	    else    
+	    { 
+	    System.out.println("Comparision failed. Test case failed");         
+	    }
+	    System.out.println("Win amount is displayed & comparision value equal to: "+" "+score31 +"%");
+	    Assert.assertTrue(score31 > 92);
+	    
 		//Checking the balance after win & navigating from gamble page
         Finder finder3 =new Finder(screen.capture().getImage());
         String ht3 = finder3.find(balance_win);
@@ -234,6 +257,28 @@ public class UltraHot_Web_AutoSpin_Validations_GamblePage {
 		screen.click(auto);
 		Thread.sleep(5000);
 		
+		//turbo button should be disabled
+        Finder finder61 =new Finder(screen.capture().getImage());
+        screen.wait(turbo,100);
+        String ht61 = finder61.find(turbo);
+        double score61=20;                
+        System.out.println("the value of ht"+" "+ht61);
+        if(finder61.hasNext())
+		 {
+		 Match m61=finder61.next();
+		 System.out.println("Match Found with: "+(m61.getScore())*100+"%");
+		 score61=(m61.getScore())*100;
+		 System.out.println("Turbo button is disabled. Test case passed");
+		 finder61.destroy();  
+		 }         
+		 else    
+		 { 
+		 System.out.println("Comparision failed. Test case failed");         
+		 }
+		 System.out.println("Turbo button is disabled & Comparision value equals to: "+" "+score61 +"%");
+		 Assert.assertTrue(score61 > 90);
+		 Thread.sleep(2000);
+		
 		//stop autoplay
 		screen.click(pat1);
 		Thread.sleep(6000);
@@ -270,7 +315,69 @@ public class UltraHot_Web_AutoSpin_Validations_GamblePage {
 		 screen.click(ok);
 		 Thread.sleep(1000);
 		 
-		//Checking Spin button availabiity after validation message
+		 
+		// decreasing & increasing the credit values
+		 screen.click(credit_d);
+		 Thread.sleep(2000);
+		 screen.click(credit_d);
+		 Thread.sleep(2000);
+		 screen.click(credit);
+		 Thread.sleep(2000);
+		 
+        Finder finder9 =new Finder(screen.capture().getImage());
+        String ht9 = finder9.find(credit3);
+        double score9=20;                
+        System.out.println("the value of ht"+" "+ht9);
+        if(finder9.hasNext())
+		 {
+		 Match m9=finder9.next();
+		 System.out.println("Match Found with: "+(m9.getScore())*100+"%");
+		 score9=(m9.getScore())*100;
+		 System.out.println("able to change the credit value after Insufficiant balance message is displayed. credit value is 0.1");
+		 finder9.destroy();  
+		 }         
+		 else    
+		 { 
+		 System.out.println("Comparision failed. Test case failed");         
+		 }
+		 System.out.println("credit value is changed & Comparision value equals to: "+" "+score9 +"%");
+		 Assert.assertTrue(score9 > 90);
+		 
+		 //increasing the bet values
+		 screen.click(betvalue);
+		 Thread.sleep(1000);
+		 screen.click(betvalue);
+		 Thread.sleep(1000);
+		 screen.click(betvalue);
+		 Thread.sleep(1000);
+		 screen.click(betvalue);
+		 Thread.sleep(2000);
+		 //decreasing bet value
+		 screen.click(betvalue_d);
+		 Thread.sleep(1000);
+		 screen.click(betvalue);
+		 Thread.sleep(2000);
+		 
+        Finder finder19 =new Finder(screen.capture().getImage());
+        String ht19 = finder19.find(credit3);
+        double score19=20;                
+        System.out.println("the value of ht"+" "+ht19);
+        if(finder19.hasNext())
+		 {
+		 Match m19=finder19.next();
+		 System.out.println("Match Found with: "+(m19.getScore())*100+"%");
+		 score19=(m19.getScore())*100;
+		 System.out.println("able to change the bet value after Insufficiant balance message is displayed. credit value is 0.1");
+		 finder19.destroy();  
+		 }         
+		 else    
+		 { 
+		 System.out.println("Comparision failed. Test case failed");         
+		 }
+		 System.out.println("bet value is changed & Comparision value equals to: "+" "+score19 +"%");
+		 Assert.assertTrue(score19 > 90);
+			 
+		//Checking Spin button availability after validation message
         Finder finder7 =new Finder(screen.capture().getImage());
         String ht7 = finder7.find(spin);
         double score7=20;                

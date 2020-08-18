@@ -74,7 +74,7 @@ public class UltraHot_Web_Check_MaximizeAndMinimize_Buttons {
 		  System.out.println("If the screen is maximized, url bar should not be visible and comparisin value equals to: "+" "+score +"%");
 		  Assert.assertFalse(score > 97);
 		  
-		 //Clicking on manimize icon 
+		 //Clicking on minimize icon 
 		 screen.click(min);
 		 Thread.sleep(7000);
 		 

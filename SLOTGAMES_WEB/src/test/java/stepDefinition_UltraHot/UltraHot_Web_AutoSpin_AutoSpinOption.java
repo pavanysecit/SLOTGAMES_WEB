@@ -61,7 +61,7 @@ public class UltraHot_Web_AutoSpin_AutoSpinOption {
 		  double score=20;                
 		  System.out.println("the value of ht"+" "+ht);
 		  if(finder.hasNext())
-		  {
+		  {	
 		  Match m=finder.next();
 		  System.out.println("Match Found with: "+(m.getScore())*100+"%");
 		  score=(m.getScore())*100;
